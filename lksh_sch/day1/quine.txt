@@ -1,0 +1,54 @@
+=== quine.py: ==========================
+def escape(s):
+    return s.translate(str.maketrans({
+        "'": "\\'",
+        "\"": "\\\"",
+        "\\": "\\\\",
+        "\n": "\\n"
+    }))    
+
+def get_src():
+    r = '$'
+    r = r.replace('$', escape(r))
+    return r;
+	
+print(get_src())
+========================================
+
+== escape.py: ==========================
+import sys, os
+def escape(s):
+    return s.translate(str.maketrans({
+        "'": "\\'",
+        "\"": "\\\"",
+        "\\": "\\\\",
+        "\n": "\\n"
+    }))
+
+for line in sys.stdin:
+    print(escape(line), end="")
+========================================
+
+> python3 escape.py
+>>ввести код quine.py
+получить: 
+def escape(s):\n    return s.translate(str.maketrans({\n        \"\'\": \"\\\\\'\",\n        \"\\\"\": \"\\\\\\\"\",\n        \"\\\\\": \"\\\\\\\\\",\n        \"\\n\": \"\\\\n\"\n    }))    \n\ndef get_src():\n    r = \'$\'\n    r = r.replace(r, escape(r))\n    return r;\n	\nprint(get_src())\n
+
+вставить это в quine.py:
+
+def escape(s):
+    return s.translate(str.maketrans({
+        "'": "\\'",
+        "\"": "\\\"",
+        "\\": "\\\\",
+        "\n": "\\n"
+    }))    
+
+def get_src():
+    r = 'def escape(s):\n    return s.translate(str.maketrans({\n        \"\'\": \"\\\\\'\",\n        \"\\\"\": \"\\\\\\\"\",\n        \"\\\\\": \"\\\\\\\\\",\n        \"\\n\": \"\\\\n\"\n    }))    \n\ndef get_src():\n    r = \'$\'\n    r = r.replace(r, escape(r))\n    return r;\n	\nprint(get_src())\n'
+    r = r.replace('$', escape(r))
+    return r;
+	
+print(get_src())
+
+Готово
